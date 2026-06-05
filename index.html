@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campagnes BDR 2026</title>
+
+  <link rel="icon" href="data:image/svg+xml,
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+    <text y='.9em' font-size='90'>📊</text>
+  </svg>">
+
+  <style>
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --speexx-orange: #FF7900;
+      --speexx-dark: #111111;
+      --speexx-border: #e5e5e5;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f5f5, #ffffff);
+      padding: 20px;
+      color: var(--speexx-dark);
+      margin: 0;
+    }
+
+    h1 {
+      color: #000;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--speexx-border);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      margin-bottom: 4px;
+      padding: 4px;
+      font-size: 10px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font: inherit;
+      background: #fff;
+      color: #111;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #FF7900;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255,121,0,0.15);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #FF7900, #ff8f1f);
+      color: white;
+      font-weight: bold;
+    }
+
+    .primary:hover {
+      opacity: 0.95;
+    }
+
+    .secondary {
+      background: #ddd;
+      color: #111;
+    }
+
+    .danger {
+      background: #000;
+      color: white;
+    }
+
+    .success {
+      background: #222;
+      color: white;
+    }
+
+    .ghost {
+      background: #f2f2f2;
+      color: #111;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 1550px;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: linear-gradient(135deg, #fff3e8, #ffe4cc);
+      border-bottom: 2px solid var(--speexx-orange);
+      position: relative;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    tr:nth-child(even) {
+      background: #fcfcfc;
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    .status.pending {
+      color: #d97706;
+      background: #fff7e8;
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+
+    .status.done {
+      color: #15803d;
+      background: #edf8ed;
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+
+    .status.late {
+      color: #b91c1c;
+      background: #fdeeee;
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+
+    .edit {
+      background: #fff3e8;
+      border-left: 3px solid #FF7900;
+    }
+
+    .actions {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: #666;
+      font-size: 12px;
+    }
+
+    .summary {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .header-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: #e7e7e7;
+      color: #333;
+      font-size: 10px;
+      cursor: pointer;
+      border: 1px solid #d6d6d6;
+      padding: 0;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .filter-toggle.active {
+      background: #FF7900;
+      color: white;
+      border-color: #FF7900;
+    }
+
+    .filter-box {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 250px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      z-index: 50;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .filter-box.open {
+      display: block;
+    }
+
+    .filter-box label {
+      display: block;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #444;
+    }
+
+    .filter-box input,
+    .filter-box select,
+    .filter-box textarea {
+      margin-bottom: 8px;
+      font-size: 12px;
+      padding: 6px;
+    }
+
+    .filter-box .inline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .checkbox-list label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: normal;
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .checkbox-list input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      padding: 0;
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .message-cell {
+      white-space: pre-wrap;
+      min-width: 260px;
+    }
+
+.wrap-cell {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+    .small-cell {
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: #666;
+    }
+
+    .edit textarea {
+      min-height: 70px;
+    }
+
+.table-textarea {
+  min-height: 52px;
+  resize: vertical;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+
+    /* =========================
+       ONGLETS + CALENDRIER
+       ========================= */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tab-button {
+      background: #f0f0f0;
+      border: 1px solid var(--speexx-border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .tab-button.active {
+      background: linear-gradient(135deg, #FF7900, #ff8f1f);
+      color: white;
+      border: none;
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    .calendar-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .calendar-toolbar-left,
+    .calendar-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .calendar-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .calendar-subtitle {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .calendar-grid.week,
+    .calendar-grid.month {
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .calendar-grid.quarter {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .calendar-grid.year {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .day-name {
+      background: #f0f0f0;
+      border-radius: 8px;
+      padding: 8px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .calendar-cell {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      min-height: 130px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .calendar-cell.outside {
+      background: #fafafa;
+      opacity: 0.65;
+    }
+
+    .calendar-cell.today {
+      border: 2px solid #FF7900;
+    }
+
+    .calendar-date {
+      font-size: 12px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .calendar-events {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .calendar-event {
+      border-radius: 10px;
+      padding: 6px;
+      font-size: 11px;
+      background: white;
+      border-left: 4px solid var(--speexx-orange);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      white-space: pre-wrap;
+      word-break: break-word;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .calendar-event:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .calendar-event.pending {
+      border-left-color: #f59e0b;
+      background: #fff7e8;
+    }
+
+    .calendar-event.done {
+      border-left-color: #22c55e;
+      background: #edf8ed;
+    }
+
+    .calendar-event.late {
+      border-left-color: #ef4444;
+      background: #fdeeee;
+    }
+
+    .calendar-empty {
+      padding: 24px;
+      text-align: center;
+      color: #777;
+      background: #fafafa;
+      border: 1px dashed #ddd;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .month-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 12px;
+      min-height: 180px;
+    }
+
+    .month-card h4 {
+      margin: 0 0 8px 0;
+      font-size: 15px;
+    }
+
+    .month-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .month-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .month-item {
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: #f5f5f5;
+      border-left: 4px solid #ddd;
+      cursor: pointer;
+    }
+
+    .month-item.pending {
+      border-left-color: orange;
+    }
+
+    .month-item.done {
+      border-left-color: green;
+    }
+
+    .month-item.late {
+      border-left-color: red;
+    }
+
+    .calendar-legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .legend-dot.pending { background: orange; }
+    .legend-dot.done { background: green; }
+    .legend-dot.late { background: red; }
+
+    @media (max-width: 1200px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-grid.week,
+      .calendar-grid.month,
+      .calendar-grid.quarter,
+      .calendar-grid.year {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>📊 Campagnes BDR 2026 </h1>
+
+  <div class="tabs">
+    <button id="tab-dashboard" class="tab-button active" onclick="switchView('dashboard')">📋 Dashboard</button>
+    <button id="tab-calendar" class="tab-button" onclick="switchView('calendar')">📅 Calendrier</button>
+  </div>
+
+  <div id="view-dashboard" class="view-section active">
+    <div class="container">
+      <!-- FORM -->
+      <div class="card">
+        <h3>➕ Nouvelle action</h3>
+        <input id="campaign" placeholder="Campagne" />
+        <input id="target" placeholder="Cible" />
+
+        <label class="muted">Date de début</label>
+        <input type="date" id="dateStart" />
+
+        <label class="muted">Date de fin</label>
+        <input type="date" id="dateEnd" />
+
+        <select id="type">
+          <option>Générique / Produit</option>
+          <option>Nouveautés</option>
+          <option>Sectorielle</option>
+          <option>Concurrence</option>
+          <option>Persona</option>
+          <option>ABM</option>
+          <option>Récurrente</option>
+          <option>Saisonnière</option>
+        </select>
+        <textarea id="message" placeholder="Message et Raison"></textarea>
+        <input id="contacts" type="number" min="0" step="1" placeholder="Nb de contacts" />
+        <input id="objectif" placeholder="Résultats" />
+        <input id="owners" placeholder="Owner(s)" />
+        <input id="campaignLink" placeholder="Lien campagne (https://...)" />
+        <select id="status">
+          <option value="pending">À faire</option>
+          <option value="done">Fait</option>
+          <option value="late">En retard</option>
+        </select>
+        <div class="button-row">
+          <button class="primary" style="width:100%" onclick="add()">Ajouter</button>
+        </div>
+        
+
+<div class="muted" style="margin-top:10px;">
+  IMPORTANT : UTILISER CHROME / données auvegardées automatiquement dans ce navigateur.
+</div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="card">
+        <h3>📋 Suivi des campagnes</h3>
+        <div class="button-row" style="margin-bottom: 12px;">
+  <button class="ghost" onclick="resetAllFilters()">Réinitialiser tous les filtres</button>
+  <button class="secondary" onclick="exportDataAsJSON()">Exporter JSON</button>
+  <button class="secondary" onclick="exportDataAsCSV()">Exporter CSV</button>
+</div>
+        <div class="summary" id="summary">0 ligne affichée</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <div class="header-cell">
+                    <span>Campagne</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-campaign', this)">▼</button>
+                  </div>
+                  <div id="filter-campaign" class="filter-box">
+                    <label>Filtre texte</label>
+                    <input id="filterCampaignContains" placeholder="Contient..." oninput="render()" />
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterCampaign()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Cible</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-target', this)">▼</button>
+                  </div>
+                  <div id="filter-target" class="filter-box">
+                    <label>Filtre texte</label>
+                    <input id="filterTargetContains" placeholder="Contient..." oninput="render()" />
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterTarget()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Date début</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-date-start', this)">▼</button>
+                  </div>
+                  <div id="filter-date-start" class="filter-box">
+                    <label>Période de début</label>
+                    <div class="inline">
+                      <input type="date" id="filterDateStartFrom" oninput="render()" />
+                      <input type="date" id="filterDateStartTo" oninput="render()" />
+                    </div>
+
+                    
+<label>Tri date début</label>
+<select id="filterDateStartSort" onchange="render()">
+  <option value="">Pas de tri</option>
+  <option value="desc" selected>Plus récente → plus ancienne</option>
+  <option value="asc">Plus ancienne → plus récente</option>
+</select>
+
+
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterDateStart()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Date fin</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-date-end', this)">▼</button>
+                  </div>
+                  <div id="filter-date-end" class="filter-box">
+                    <label>Période de fin</label>
+                    <div class="inline">
+                      <input type="date" id="filterDateEndFrom" oninput="render()" />
+                      <input type="date" id="filterDateEndTo" oninput="render()" />
+                    </div>
+
+                    <label>Tri date fin</label>
+                    <select id="filterDateEndSort" onchange="render()">
+                      <option value="">Pas de tri</option>
+                      <option value="desc">Plus récente → plus ancienne</option>
+                      <option value="asc">Plus ancienne → plus récente</option>
+                    </select>
+
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterDateEnd()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Type</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-type', this)">▼</button>
+                  </div>
+                  <div id="filter-type" class="filter-box">
+                    <label>Types affichés</label>
+                    <div class="checkbox-list">
+                      <label><input type="checkbox" id="filterTypeGenerique" checked onchange="render()" /> Générique / Produit</label>
+                      <label><input type="checkbox" id="filterTypeNouveautes" checked onchange="render()" /> Nouveautés</label>
+                      <label><input type="checkbox" id="filterTypeSectorielle" checked onchange="render()" /> Sectorielle</label>
+                      <label><input type="checkbox" id="filterTypeConcurrence" checked onchange="render()" /> Concurrence</label>
+                      <label><input type="checkbox" id="filterTypePersona" checked onchange="render()" /> Persona</label>
+                      <label><input type="checkbox" id="filterTypeABM" checked onchange="render()" /> ABM</label>
+                      <label><input type="checkbox" id="filterTypeRecurrente" checked onchange="render()" /> Récurrente</label>
+                      <label><input type="checkbox" id="filterTypeSaisonniere" checked onchange="render()" /> Saisonnière</label>
+                    </div>
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterType()">Tout cocher</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Message et Raison</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-message', this)">▼</button>
+                  </div>
+                  <div id="filter-message" class="filter-box">
+                    <label>Filtre texte</label>
+                    <input id="filterMessageContains" placeholder="Contient..." oninput="render()" />
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterMessage()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Nb de contacts</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-contacts', this)">▼</button>
+                  </div>
+                  <div id="filter-contacts" class="filter-box">
+                    <label>Plage de volume</label>
+                    <div class="inline">
+                      <input type="number" id="filterContactsMin" min="0" step="1" placeholder="Min" oninput="render()" />
+                      <input type="number" id="filterContactsMax" min="0" step="1" placeholder="Max" oninput="render()" />
+                    </div>
+
+                    <label>Tri numérique</label>
+                    <select id="filterContactsSort" onchange="render()">
+                      <option value="">Pas de tri</option>
+                      <option value="desc">Plus grand → plus petit</option>
+                      <option value="asc">Plus petit → plus grand</option>
+                    </select>
+
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterContacts()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Résultats</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-objectif', this)">▼</button>
+                  </div>
+                  <div id="filter-objectif" class="filter-box">
+                    <label>Filtre texte</label>
+                    <input id="filterObjectifContains" placeholder="Contient..." oninput="render()" />
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterObjectif()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Owner(s)</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-owners', this)">▼</button>
+                  </div>
+                  <div id="filter-owners" class="filter-box">
+                    <label>Filtre texte</label>
+                    <input id="filterOwnersContains" placeholder="Contient..." oninput="render()" />
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterOwners()">Effacer</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th>Lien</th>
+
+                <th>
+                  <div class="header-cell">
+                    <span>Statut</span>
+                    <button class="filter-toggle" type="button" onclick="toggleFilter(event, 'filter-status', this)">▼</button>
+                  </div>
+                  <div id="filter-status" class="filter-box">
+                    <label>Statuts affichés</label>
+                    <div class="checkbox-list">
+                      <label><input type="checkbox" id="filterStatusPending" checked onchange="render()" /> À faire</label>
+                      <label><input type="checkbox" id="filterStatusDone" checked onchange="render()" /> Fait</label>
+                      <label><input type="checkbox" id="filterStatusLate" checked onchange="render()" /> En retard</label>
+                    </div>
+                    <div class="filter-actions">
+                      <button class="secondary" type="button" onclick="clearFilterStatus()">Tout cocher</button>
+                    </div>
+                  </div>
+                </th>
+
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-calendar" class="view-section">
+    <div class="card">
+      <div class="calendar-toolbar">
+        <div class="calendar-toolbar-left">
+          <button class="secondary" onclick="shiftCalendar(-1)">← Précédent</button>
+          <button class="ghost" onclick="goToToday()">Aujourd'hui</button>
+          <button class="secondary" onclick="shiftCalendar(1)">Suivant →</button>
+        </div>
+
+        <div class="calendar-toolbar-right">
+          <select id="calendarMode" onchange="setCalendarMode(this.value)" style="width:auto; min-width: 170px; margin-bottom:0;">
+            <option value="week">Vue semaine</option>
+            <option value="month" selected>Vue mois</option>
+            <option value="quarter">Vue trimestre</option>
+            <option value="year">Vue année</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calendar-title" id="calendarTitle">Calendrier</div>
+      <div class="calendar-subtitle">
+        Vue liée à la liste des campagnes affichées. Les filtres du dashboard impactent aussi le calendrier.
+      </div>
+
+      <div class="calendar-legend">
+        <span class="legend-item"><span class="legend-dot pending"></span> À faire</span>
+        <span class="legend-item"><span class="legend-dot done"></span> Fait</span>
+        <span class="legend-item"><span class="legend-dot late"></span> En retard</span>
+      </div>
+
+      <div id="calendarContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "campagnes_bdr_2026_data";
+
+const defaultData = [
+  {
+    id: 1780579728668,
+    campaign: "Banque / Finance / Assurances",
+    target: "ENT secteurs Banque / Finance / Assurances",
+    dateStart: "2026-09-18",
+    dateEnd: "2026-12-01",
+    type: "Sectorielle",
+    message: "Cibler Banque / Finance / Assurances avec Cas clients",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "pending"
+  },
+  {
+    id: 1780579469837,
+    campaign: "Call Back Webinars et Trade Show",
+    target: "Leads Inbound de l'année",
+    dateStart: "2026-06-15",
+    dateEnd: "2026-07-15",
+    type: "Récurrente",
+    message: "Reprendre contact avec Leads inbound Webinars et Salons  1er semestrre 2026",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "pending"
+  },
+  {
+    id: 1780579373083,
+    campaign: "Call Back Actionnables",
+    target: "Leads Inbound Entrants",
+    dateStart: "2026-06-15",
+    dateEnd: "2026-07-15",
+    type: "Récurrente",
+    message: "Reprendre contact avec Leads inbound Actionnables 1er semestrre 2026 et Décembre 2025.",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "pending"
+  },
+  {
+    id: 1780579270319,
+    campaign: "Campagne BUNDLE (*2 Produit)",
+    target: "Large",
+    dateStart: "2026-10-05",
+    dateEnd: "2026-12-31",
+    type: "Générique / Produit",
+    message: "Package LT + IT\nPackage BC + MT",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "pending"
+  },
+  {
+    id: 1780579198574,
+    campaign: "Campagne Rentrée",
+    target: "",
+    dateStart: "2026-08-17",
+    dateEnd: "2026-09-25",
+    type: "Saisonnière",
+    message: "",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "pending"
+  },
+  {
+    id: 1780579163602,
+    campaign: "Campagne ETE",
+    target: "Large",
+    dateStart: "2026-06-22",
+    dateEnd: "2026-08-25",
+    type: "Saisonnière",
+    message: "",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "pending"
+  },
+  {
+    id: 1780579113331,
+    campaign: "Campagne Achats / AO",
+    target: "CAC 40 / SBF 120 / Comptes AO",
+    dateStart: "2026-06-02",
+    dateEnd: "2026-07-31",
+    type: "Récurrente",
+    message: "Chasser les comptes à AO\nAchats + L&D",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "late"
+  },
+  {
+    id: 1780579054575,
+    campaign: "Campagne Belgique",
+    target: "BELUX",
+    dateStart: "2026-06-02",
+    dateEnd: "2026-07-31",
+    type: "Nouveautés",
+    message: "Suite nouveauté produit Langues >> Cible les entreprises BELUX",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "late"
+  },
+  {
+    id: 1780578984131,
+    campaign: "Lost Opp",
+    target: "Opp perdues",
+    dateStart: "2026-06-02",
+    dateEnd: "2026-07-31",
+    type: "Récurrente",
+    message: "Reprendre contact avec Opp Lost, soit entreprise complète ou Stakeholders déjà identifés",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "",
+    status: "late"
+  },
+  {
+    id: 1780578275799,
+    campaign: "Langues",
+    target: "Large : L&D, Talent, Formation",
+    dateStart: "2026-12-31",
+    dateEnd: "",
+    type: "Générique / Produit",
+    message: "100% orientée Langues",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "https://web.outreach.io/sequences?queryFilters=%5B%7B%22attribute%22%3A%22tags%22%2C%22operator%22%3A%22containsAll%22%2C%22value%22%3A%5B%22Langues%20BDR%20France%202026%22%5D%7D%5D&sortBy=createdAt&sortDirection=desc",
+    status: "pending"
+  },
+  {
+    id: 1780578265456,
+    campaign: "Current Not Global",
+    target: "Entreprises clientes hors France, reliées au compte FR",
+    dateStart: "2026-05-07",
+    dateEnd: "2026-07-10",
+    type: "Récurrente",
+    message: "Cibler les entreprises avec PARENT ACCOUNT ou ENTITE DU MEME GROUPE = Statut CURRENT",
+    contacts: "140",
+    objectif: "1 RDV",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "https://web.outreach.io/sequences?queryFilters=%5B%7B%22attribute%22%3A%22tags%22%2C%22operator%22%3A%22containsAll%22%2C%22value%22%3A%5B%22FR%20-%20Current%20not%20global%202026%22%5D%7D%5D&sortBy=createdAt&sortDirection=desc",
+    status: "pending"
+  },
+  {
+    id: 1780578257383,
+    campaign: "Intercultural Foundations",
+    target: "Cible faite par RevOp",
+    dateStart: "2026-05-18",
+    dateEnd: "2026-06-19",
+    type: "Générique / Produit",
+    message: "Promouvoir le nouveau produit interculturel",
+    contacts: "309",
+    objectif: "0 SQL",
+    owners: "Jérémie",
+    campaignLink: "https://web.outreach.io/sequences/4444/overview",
+    status: "done"
+  },
+  {
+    id: 1780578051255,
+    campaign: "Hotellerie",
+    target: "Hotels et Centres de Vacances",
+    dateStart: "2026-04-13",
+    dateEnd: "2026-06-11",
+    type: "Sectorielle",
+    message: "Utiliser Cas Clients Accor et Club Med piur toucher autres ENT du secteur",
+    contacts: "151",
+    objectif: "2 SQL",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "https://web.outreach.io/sequences?queryFilters=%5B%7B%22attribute%22%3A%22tags%22%2C%22operator%22%3A%22containsAll%22%2C%22value%22%3A%5B%22FR%20-%20Secto%22%5D%7D%5D&sortBy=createdAt&sortDirection=desc",
+    status: "done"
+  },
+  {
+    id: 1780577786114,
+    campaign: "Coaching",
+    target: "Large : L&D, Talent, Formation",
+    dateStart: "2026-12-31",
+    dateEnd: "",
+    type: "Générique / Produit",
+    message: "100% orienté Coaching",
+    contacts: "",
+    objectif: "",
+    owners: "Jérémie, AnaÎs",
+    campaignLink: "https://web.outreach.io/sequences?queryFilters=%5B%7B%22attribute%22%3A%22tags%22%2C%22operator%22%3A%22containsAll%22%2C%22value%22%3A%5B%22Coaching%20BDR%20France%202026%22%5D%7D%5D&sortBy=createdAt&sortDirection=asc",
+    status: "pending"
+  },
+  {
+    id: 1780577512878,
+    campaign: "Multi-Prod",
+    target: "Large L&D/Talent/Formation",
+    dateStart: "2026-02-05",
+    dateEnd: "2026-04-29",
+    type: "Générique / Produit",
+    message: "People Dev. Platfform\nPackages multi produits",
+    contacts: "700",
+    objectif: "0 SQL",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "https://web.outreach.io/sequences/4330/overview",
+    status: "done"
+  },
+  {
+    id: 1780576760407,
+    campaign: "Campagne EF",
+    target: "Clients EF - 181 Contacts",
+    dateStart: "2026-02-04",
+    dateEnd: "2026-07-03",
+    type: "Concurrence",
+    message: "Changement Strat EF >> Récupérer leurs clients",
+    contacts: "181",
+    objectif: "0 SQL",
+    owners: "Jérémie, Anaïs",
+    campaignLink: "https://web.outreach.io/sequences/4281/overview",
+    status: "done"
+  },
+  {
+    id: 1780576645342,
+    campaign: "Nouvelle Année 2026",
+    target: "2300 L&D/Talent/Formation",
+    dateStart: "2026-01-01",
+    dateEnd: "2026-02-27",
+    type: "Saisonnière",
+    message: "Voeux 2026\nNouveaus projets",
+    contacts: "2300",
+    objectif: "2 SQL",
+    owners: "Jérémie",
+    campaignLink: "https://web.outreach.io/sequences/4179",
+    status: "done"
+  }
+].map(normalizeItem);
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+
+    if (!raw) {
+      return [...defaultData];
+    }
+
+    const parsed = JSON.parse(raw);
+
+    if (!Array.isArray(parsed)) {
+      return [...defaultData];
+    }
+
+    return parsed.map(normalizeItem);
+  } catch (error) {
+    console.error("Erreur de chargement localStorage :", error);
+    return [...defaultData];
+  }
+}
+
+const data = loadData();
+
+let editId = null;
+let buffer = {};
+
+    let currentView = "dashboard";
+    let calendarMode = "month";
+    let calendarCursor = new Date();
+
+    function el(id) {
+      return document.getElementById(id);
+    }
+
+    // =========================
+    // CORRECTIONS / NORMALISATION
+    // =========================
+    function normalizeType(value) {
+      return String(value || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+    }
+
+    function normalizeStatus(value) {
+      const v = String(value || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+
+      if (v === "à faire" || v === "a faire") return "pending";
+      if (v === "fait") return "done";
+      if (v === "en retard") return "late";
+      if (v === "pending" || v === "done" || v === "late") return v;
+
+      return v;
+    }
+
+    function normalizeItem(item) {
+      const legacyDate = String(item?.date || "").trim();
+      const normalizedStart = String(item?.dateStart || legacyDate || "").trim();
+      const normalizedEnd = String(item?.dateEnd || "").trim();
+
+      return {
+  id: item?.id ?? Date.now(),
+  campaign: String(item?.campaign || "").trim(),
+  target: String(item?.target || "").trim(),
+  dateStart: normalizedStart,
+  dateEnd: normalizedEnd,
+  type: String(item?.type || "").trim().replace(/\s+/g, " "),
+  message: String(item?.message || "").trim(),
+  contacts: String(item?.contacts || "").trim(),
+  objectif: String(item?.objectif || "").trim(),
+  owners: String(item?.owners || "").trim(),
+  campaignLink: String(item?.campaignLink || "").trim(),
+  status: normalizeStatus(item?.status || "")
+ };
+}
+
+
+function save() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("Erreur de sauvegarde localStorage :", error);
+    alert("Impossible de sauvegarder les données dans le navigateur.");
+  }
+}
+
+
+    function safeLower(value) {
+      return String(value || "").toLowerCase();
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function statusLabel(value) {
+      const normalized = normalizeStatus(value);
+      if (normalized === "pending") return "À faire";
+      if (normalized === "done") return "Fait";
+      if (normalized === "late") return "En retard";
+      return value || "";
+    }
+
+function openCampaignLink(url) {
+  const raw = String(url || "").trim();
+
+  if (!raw) {
+    alert("Aucun lien renseigné pour cette tâche.");
+    return;
+  }
+
+  const finalUrl = /^https?:\/\//i.test(raw) ? raw : "https://" + raw;
+  window.open(finalUrl, "_blank", "noopener,noreferrer");
+}
+
+    function parseContacts(value) {
+      const n = parseInt(String(value || "").replace(/[^\d-]/g, ""), 10);
+      return Number.isFinite(n) ? n : null;
+    }
+
+function downloadFile(filename, content, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+}
+
+function exportDataAsJSON() {
+  const json = JSON.stringify(data, null, 2);
+  downloadFile("dataset-campagnes.json", json, "application/json;charset=utf-8;");
+}
+
+function escapeCSVValue(value) {
+  const str = String(value ?? "");
+  const escaped = str.replace(/"/g, '""');
+  return `"${escaped}"`;
+}
+
+function exportDataAsCSV() {
+  const headers = [
+    "id",
+    "campaign",
+    "target",
+    "dateStart",
+    "dateEnd",
+    "type",
+    "message",
+    "contacts",
+    "objectif",
+    "owners",
+    "campaignLink",
+    "status"
+  ];
+
+  const rows = data.map(item => [
+    item.id,
+    item.campaign,
+    item.target,
+    item.dateStart,
+    item.dateEnd,
+    item.type,
+    item.message,
+    item.contacts,
+    item.objectif,
+    item.owners,
+    item.campaignLink,
+    item.status
+  ]);
+
+  const csvContent = [
+    headers.map(escapeCSVValue).join(","),
+    ...rows.map(row => row.map(escapeCSVValue).join(","))
+  ].join("\n");
+
+  downloadFile("dataset-campagnes.csv", csvContent, "text/csv;charset=utf-8;");
+}
+
+function resetStoredData() {
+  const confirmed = confirm("Voulez-vous vraiment supprimer les données sauvegardées et remettre les données initiales ?");
+  if (!confirmed) return;
+
+  localStorage.removeItem(STORAGE_KEY);
+
+  data.length = 0;
+  defaultData.forEach(item => data.push(normalizeItem(item)));
+
+  editId = null;
+  buffer = {};
+
+  save();
+  render();
+}
+
+    function compareISODate(a, b, direction = "asc") {
+      if (a === b) return 0;
+      if (!a) return 1;
+      if (!b) return -1;
+      return direction === "asc" ? a.localeCompare(b) : b.localeCompare(a);
+    }
+
+    function clearForm() {
+  el("campaign").value = "";
+  el("target").value = "";
+  el("dateStart").value = "";
+  el("dateEnd").value = "";
+  el("type").value = "Générique / Produit";
+  el("message").value = "";
+  el("contacts").value = "";
+  el("objectif").value = "";
+  el("owners").value = "";
+  el("campaignLink").value = "";
+  el("status").value = "pending";
+}
+
+    function add() {
+      const newItem = normalizeItem({
+  id: Date.now(),
+  campaign: el("campaign").value.trim(),
+  target: el("target").value.trim(),
+  dateStart: el("dateStart").value,
+  dateEnd: el("dateEnd").value,
+  type: el("type").value,
+  message: el("message").value.trim(),
+  contacts: el("contacts").value.trim(),
+  objectif: el("objectif").value.trim(),
+  owners: el("owners").value.trim(),
+  campaignLink: el("campaignLink").value.trim(),
+  status: el("status").value
+});
+
+      const isEmpty =
+  !newItem.campaign &&
+  !newItem.target &&
+  !newItem.dateStart &&
+  !newItem.dateEnd &&
+  !newItem.message &&
+  !newItem.contacts &&
+  !newItem.objectif &&
+  !newItem.owners &&
+  !newItem.campaignLink;
+
+      if (isEmpty) {
+        alert("Ajoute au moins un champ ✅");
+        return;
+      }
+
+      data.unshift(newItem);
+
+      save();
+      clearForm();
+      render();
+    }
+
+    function del(id) {
+  const index = data.findIndex(a => a.id === id);
+  if (index !== -1) {
+    data.splice(index, 1);
+  }
+
+  if (editId === id) {
+    editId = null;
+    buffer = {};
+  }
+
+  save();
+  render();
+}
+
+    function edit(id) {
+      editId = id;
+      buffer = { ...data.find(a => a.id === id) };
+      render();
+    }
+
+    function cancel() {
+      editId = null;
+      buffer = {};
+      render();
+    }
+
+    function update(field, value) {
+      buffer[field] = value;
+    }
+
+    function saveEdit(id) {
+      const index = data.findIndex(a => a.id === id);
+      if (index === -1) return;
+
+      data[index] = normalizeItem({
+  id,
+  campaign: String(buffer.campaign || "").trim(),
+  target: String(buffer.target || "").trim(),
+  dateStart: buffer.dateStart || "",
+  dateEnd: buffer.dateEnd || "",
+  type: buffer.type || "Générique / Produit",
+  message: String(buffer.message || "").trim(),
+  contacts: String(buffer.contacts || "").trim(),
+  objectif: String(buffer.objectif || "").trim(),
+  owners: String(buffer.owners || "").trim(),
+  campaignLink: String(buffer.campaignLink || "").trim(),
+  status: buffer.status || "pending"
+});
+
+
+      editId = null;
+      buffer = {};
+      save();
+      render();
+    }
+
+    function closeAllFilters() {
+      document.querySelectorAll(".filter-box").forEach(box => box.classList.remove("open"));
+      updateFilterButtonStates();
+    }
+
+    function toggleFilter(event, filterId, button) {
+      event.stopPropagation();
+      const box = el(filterId);
+      const wasOpen = box.classList.contains("open");
+
+      closeAllFilters();
+
+      if (!wasOpen) {
+        box.classList.add("open");
+      }
+
+      updateFilterButtonStates();
+    }
+
+    document.addEventListener("click", function(event) {
+      const insideFilter = event.target.closest(".filter-box");
+      const isToggle = event.target.closest(".filter-toggle");
+
+      if (!insideFilter && !isToggle) {
+        closeAllFilters();
+      }
+    });
+
+    function typeFiltersAreDefault() {
+      return (
+        el("filterTypeGenerique").checked &&
+        el("filterTypeNouveautes").checked &&
+        el("filterTypeSectorielle").checked &&
+        el("filterTypeConcurrence").checked &&
+        el("filterTypePersona").checked &&
+        el("filterTypeABM").checked &&
+        el("filterTypeRecurrente").checked &&
+        el("filterTypeSaisonniere").checked
+      );
+    }
+
+    function statusFiltersAreDefault() {
+      return (
+        el("filterStatusPending").checked &&
+        el("filterStatusDone").checked &&
+        el("filterStatusLate").checked
+      );
+    }
+
+    function hasActiveFilterForColumn(columnKey) {
+      switch (columnKey) {
+        case "campaign":
+          return !!el("filterCampaignContains").value.trim();
+        case "target":
+          return !!el("filterTargetContains").value.trim();
+        case "dateStart":
+          return !!el("filterDateStartFrom").value || !!el("filterDateStartTo").value || !!el("filterDateStartSort").value;
+        case "dateEnd":
+          return !!el("filterDateEndFrom").value || !!el("filterDateEndTo").value || !!el("filterDateEndSort").value;
+        case "type":
+          return !typeFiltersAreDefault();
+        case "message":
+          return !!el("filterMessageContains").value.trim();
+        case "contacts":
+          return !!el("filterContactsMin").value || !!el("filterContactsMax").value || !!el("filterContactsSort").value;
+        case "objectif":
+          return !!el("filterObjectifContains").value.trim();
+        case "owners":
+          return !!el("filterOwnersContains").value.trim();
+        case "status":
+          return !statusFiltersAreDefault();
+        default:
+          return false;
+      }
+    }
+
+    function updateFilterButtonStates() {
+      const mappings = [
+        { btnBoxId: "filter-campaign", key: "campaign" },
+        { btnBoxId: "filter-target", key: "target" },
+        { btnBoxId: "filter-date-start", key: "dateStart" },
+        { btnBoxId: "filter-date-end", key: "dateEnd" },
+        { btnBoxId: "filter-type", key: "type" },
+        { btnBoxId: "filter-message", key: "message" },
+        { btnBoxId: "filter-contacts", key: "contacts" },
+        { btnBoxId: "filter-objectif", key: "objectif" },
+        { btnBoxId: "filter-owners", key: "owners" },
+        { btnBoxId: "filter-status", key: "status" }
+      ];
+
+      mappings.forEach(({ btnBoxId, key }) => {
+        const box = el(btnBoxId);
+        const th = box.closest("th");
+        const btn = th.querySelector(".filter-toggle");
+        const isOpen = box.classList.contains("open");
+        const isActive = hasActiveFilterForColumn(key);
+
+        btn.classList.toggle("active", isOpen || isActive);
+      });
+    }
+
+    function clearFilterCampaign(skipRender = false) {
+      el("filterCampaignContains").value = "";
+      if (!skipRender) render();
+    }
+
+    function clearFilterTarget(skipRender = false) {
+      el("filterTargetContains").value = "";
+      if (!skipRender) render();
+    }
+
+    
+function clearFilterDateStart(skipRender = false) {
+  el("filterDateStartFrom").value = "";
+  el("filterDateStartTo").value = "";
+  el("filterDateStartSort").value = "desc";
+  if (!skipRender) render();
+}
+
+
+    function clearFilterDateEnd(skipRender = false) {
+      el("filterDateEndFrom").value = "";
+      el("filterDateEndTo").value = "";
+      el("filterDateEndSort").value = "";
+      if (!skipRender) render();
+    }
+
+    function clearFilterType(skipRender = false) {
+      el("filterTypeGenerique").checked = true;
+      el("filterTypeNouveautes").checked = true;
+      el("filterTypeSectorielle").checked = true;
+      el("filterTypeConcurrence").checked = true;
+      el("filterTypePersona").checked = true;
+      el("filterTypeABM").checked = true;
+      el("filterTypeRecurrente").checked = true;
+      el("filterTypeSaisonniere").checked = true;
+      if (!skipRender) render();
+    }
+
+    function clearFilterMessage(skipRender = false) {
+      el("filterMessageContains").value = "";
+      if (!skipRender) render();
+    }
+
+    function clearFilterContacts(skipRender = false) {
+      el("filterContactsMin").value = "";
+      el("filterContactsMax").value = "";
+      el("filterContactsSort").value = "";
+      if (!skipRender) render();
+    }
+
+    function clearFilterObjectif(skipRender = false) {
+      el("filterObjectifContains").value = "";
+      if (!skipRender) render();
+    }
+
+    function clearFilterOwners(skipRender = false) {
+      el("filterOwnersContains").value = "";
+      if (!skipRender) render();
+    }
+
+    function clearFilterStatus(skipRender = false) {
+      el("filterStatusPending").checked = true;
+      el("filterStatusDone").checked = true;
+      el("filterStatusLate").checked = true;
+      if (!skipRender) render();
+    }
+
+    function resetAllFilters() {
+      clearFilterCampaign(true);
+      clearFilterTarget(true);
+      clearFilterDateStart(true);
+      clearFilterDateEnd(true);
+      clearFilterType(true);
+      clearFilterMessage(true);
+      clearFilterContacts(true);
+      clearFilterObjectif(true);
+      clearFilterOwners(true);
+      clearFilterStatus(true);
+      closeAllFilters();
+      render();
+    }
+
+    function getAllowedTypes() {
+      const types = [];
+
+      if (el("filterTypeGenerique").checked) types.push("Générique / Produit");
+      if (el("filterTypeNouveautes").checked) types.push("Nouveautés");
+      if (el("filterTypeSectorielle").checked) types.push("Sectorielle");
+      if (el("filterTypeConcurrence").checked) types.push("Concurrence");
+      if (el("filterTypePersona").checked) types.push("Persona");
+      if (el("filterTypeABM").checked) types.push("ABM");
+      if (el("filterTypeRecurrente").checked) types.push("Récurrente");
+      if (el("filterTypeSaisonniere").checked) types.push("Saisonnière");
+
+      return types;
+    }
+
+    function getAllowedStatuses() {
+      const statuses = [];
+      if (el("filterStatusPending").checked) statuses.push("pending");
+      if (el("filterStatusDone").checked) statuses.push("done");
+      if (el("filterStatusLate").checked) statuses.push("late");
+      return statuses;
+    }
+
+    function applyFilters(rows) {
+      const campaignContains = safeLower(el("filterCampaignContains").value);
+      const targetContains = safeLower(el("filterTargetContains").value);
+      const messageContains = safeLower(el("filterMessageContains").value);
+      const objectifContains = safeLower(el("filterObjectifContains").value);
+      const ownersContains = safeLower(el("filterOwnersContains").value);
+
+      const dateStartFrom = el("filterDateStartFrom").value;
+      const dateStartTo = el("filterDateStartTo").value;
+      const dateEndFrom = el("filterDateEndFrom").value;
+      const dateEndTo = el("filterDateEndTo").value;
+
+      const contactsMin = el("filterContactsMin").value;
+      const contactsMax = el("filterContactsMax").value;
+
+      const allowedTypesNormalized = getAllowedTypes().map(normalizeType);
+      const allowedStatusesNormalized = getAllowedStatuses().map(normalizeStatus);
+
+      return rows.filter(a => {
+        const campaignMatch = !campaignContains || safeLower(a.campaign).includes(campaignContains);
+        const targetMatch = !targetContains || safeLower(a.target).includes(targetContains);
+        const messageMatch = !messageContains || safeLower(a.message).includes(messageContains);
+        const objectifMatch = !objectifContains || safeLower(a.objectif).includes(objectifContains);
+        const ownersMatch = !ownersContains || safeLower(a.owners).includes(ownersContains);
+
+        const rowType = normalizeType(a.type);
+        const rowStatus = normalizeStatus(a.status);
+
+        const typeMatch = allowedTypesNormalized.includes(rowType);
+        const statusMatch = allowedStatusesNormalized.includes(rowStatus);
+
+        const rowDateStart = a.dateStart || "";
+        const rowDateEnd = a.dateEnd || "";
+
+        const startFromMatch = !dateStartFrom || (rowDateStart && rowDateStart >= dateStartFrom);
+        const startToMatch = !dateStartTo || (rowDateStart && rowDateStart <= dateStartTo);
+        const endFromMatch = !dateEndFrom || (rowDateEnd && rowDateEnd >= dateEndFrom);
+        const endToMatch = !dateEndTo || (rowDateEnd && rowDateEnd <= dateEndTo);
+
+        const rowContacts = parseContacts(a.contacts);
+        const minMatch = contactsMin === "" || (rowContacts !== null && rowContacts >= Number(contactsMin));
+        const maxMatch = contactsMax === "" || (rowContacts !== null && rowContacts <= Number(contactsMax));
+
+        return (
+          campaignMatch &&
+          targetMatch &&
+          messageMatch &&
+          objectifMatch &&
+          ownersMatch &&
+          typeMatch &&
+          statusMatch &&
+          startFromMatch &&
+          startToMatch &&
+          endFromMatch &&
+          endToMatch &&
+          minMatch &&
+          maxMatch
+        );
+      });
+    }
+
+    function applySorting(rows) {
+  const dateStartSort = el("filterDateStartSort").value || "desc";
+  const dateEndSort = el("filterDateEndSort").value;
+  const contactsSort = el("filterContactsSort").value;
+
+  const sorted = [...rows];
+
+  // Tri date fin (priorité secondaire)
+  if (dateEndSort) {
+    sorted.sort((a, b) => {
+      const da = a.dateEnd || "";
+      const db = b.dateEnd || "";
+      return compareISODate(da, db, dateEndSort);
+    });
+  }
+
+  // Tri date début (par défaut = desc)
+  sorted.sort((a, b) => {
+    const da = a.dateStart || "";
+    const db = b.dateStart || "";
+    return compareISODate(da, db, dateStartSort);
+  });
+
+  // Tri contacts (optionnel)
+  if (contactsSort) {
+    sorted.sort((a, b) => {
+      const na = parseContacts(a.contacts);
+      const nb = parseContacts(b.contacts);
+
+      const va = na === null
+        ? (contactsSort === "asc" ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER)
+        : na;
+      const vb = nb === null
+        ? (contactsSort === "asc" ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER)
+        : nb;
+
+      return contactsSort === "asc" ? va - vb : vb - va;
+    });
+  }
+
+  return sorted;
+}
+
+
+    // =========================
+    // ONGLETS
+    // =========================
+    function switchView(view) {
+      currentView = view;
+
+      document.querySelectorAll(".view-section").forEach(section => {
+        section.classList.remove("active");
+      });
+
+      document.querySelectorAll(".tab-button").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      el("view-" + view).classList.add("active");
+      el("tab-" + view).classList.add("active");
+
+      if (view === "calendar") {
+        renderCalendar();
+      }
+    }
+
+    // =========================
+    // CALENDRIER
+    // =========================
+    function parseISODate(value) {
+      if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+      const [y, m, d] = value.split("-").map(Number);
+      return new Date(y, m - 1, d, 12, 0, 0, 0);
+    }
+
+    function formatDateFr(date, options) {
+      return new Intl.DateTimeFormat("fr-FR", options).format(date);
+    }
+
+    function toISODate(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function isSameDay(a, b) {
+      return a.getFullYear() === b.getFullYear() &&
+             a.getMonth() === b.getMonth() &&
+             a.getDate() === b.getDate();
+    }
+
+    function startOfWeek(date) {
+      const d = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
+      const day = (d.getDay() + 6) % 7; // lundi = 0
+      d.setDate(d.getDate() - day);
+      return d;
+    }
+
+    function endOfWeek(date) {
+      const d = startOfWeek(date);
+      d.setDate(d.getDate() + 6);
+      return d;
+    }
+
+    function startOfMonth(date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1, 12);
+    }
+
+    function endOfMonth(date) {
+      return new Date(date.getFullYear(), date.getMonth() + 1, 0, 12);
+    }
+
+    function startOfQuarter(date) {
+      const quarterStartMonth = Math.floor(date.getMonth() / 3) * 3;
+      return new Date(date.getFullYear(), quarterStartMonth, 1, 12);
+    }
+
+    function endOfQuarter(date) {
+      const s = startOfQuarter(date);
+      return new Date(s.getFullYear(), s.getMonth() + 3, 0, 12);
+    }
+
+    function startOfYear(date) {
+      return new Date(date.getFullYear(), 0, 1, 12);
+    }
+
+    function endOfYear(date) {
+      return new Date(date.getFullYear(), 11, 31, 12);
+    }
+
+    function getVisibleRows() {
+      return applySorting(applyFilters(data));
+    }
+
+    function normalizeEventRange(item) {
+      let start = parseISODate(item.dateStart || "");
+      let end = parseISODate(item.dateEnd || "");
+
+      if (!start && !end) return null;
+      if (!start && end) start = new Date(end);
+      if (start && !end) end = new Date(start);
+
+      if (start > end) {
+        const temp = start;
+        start = end;
+        end = temp;
+      }
+
+      return {
+        ...item,
+        _startDateObj: start,
+        _endDateObj: end
+      };
+    }
+
+    function getCalendarRows() {
+      return getVisibleRows()
+        .map(normalizeEventRange)
+        .filter(Boolean);
+    }
+
+    function groupRowsByDate(rows) {
+      const map = {};
+
+      rows.forEach(row => {
+        const cursor = new Date(row._startDateObj);
+        const end = new Date(row._endDateObj);
+
+        while (cursor <= end) {
+          const key = toISODate(cursor);
+          if (!map[key]) map[key] = [];
+          map[key].push(row);
+          cursor.setDate(cursor.getDate() + 1);
+        }
+      });
+
+      return map;
+    }
+
+    function itemDateRangeLabel(item) {
+      const start = item.dateStart || "";
+      const end = item.dateEnd || "";
+
+      if (start && end) {
+        if (start === end) return start;
+        return `${start} → ${end}`;
+      }
+
+      if (start) return start;
+      if (end) return end;
+      return "";
+    }
+
+    function eventHtml(item, compact = false) {
+      const normalizedStatus = normalizeStatus(item.status);
+      const campaign = escapeHtml(item.campaign || "(Sans campagne)");
+      const target = escapeHtml(item.target || "");
+      const type = escapeHtml(item.type || "");
+      const owners = escapeHtml(item.owners || "");
+      const objectif = escapeHtml(item.objectif || "");
+      const dateRange = escapeHtml(itemDateRangeLabel(item));
+
+      return `
+        <div class="calendar-event ${escapeHtml(normalizedStatus)}" onclick="openEvent(${item.id})" title="Cliquer pour modifier cette campagne">
+          <strong>${campaign}</strong>
+          ${target ? `<div>${target}</div>` : ""}
+          ${dateRange ? `<div><span class="muted">${dateRange}</span></div>` : ""}
+          ${compact ? "" : (type ? `<div><span class="muted">${type}</span></div>` : "")}
+          ${compact ? "" : (owners ? `<div><span class="muted">Owner(s) : ${owners}</span></div>` : "")}
+          ${compact ? "" : (objectif ? `<div><span class="muted">Résultats : ${objectif}</span></div>` : "")}
+          <div><span class="muted">${escapeHtml(statusLabel(normalizedStatus))}</span></div>
+        </div>
+      `;
+    }
+
+    function openEvent(id) {
+      switchView("dashboard");
+      edit(id);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function setCalendarMode(mode) {
+      calendarMode = mode;
+      el("calendarMode").value = mode;
+      renderCalendar();
+    }
+
+    function shiftCalendar(step) {
+      if (calendarMode === "week") {
+        calendarCursor.setDate(calendarCursor.getDate() + (7 * step));
+      } else if (calendarMode === "month") {
+        calendarCursor.setMonth(calendarCursor.getMonth() + step);
+      } else if (calendarMode === "quarter") {
+        calendarCursor.setMonth(calendarCursor.getMonth() + (3 * step));
+      } else if (calendarMode === "year") {
+        calendarCursor.setFullYear(calendarCursor.getFullYear() + step);
+      }
+
+      renderCalendar();
+    }
+
+    function goToToday() {
+      calendarCursor = new Date();
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const rows = getCalendarRows();
+      const grouped = groupRowsByDate(rows);
+      const today = new Date();
+
+      if (calendarMode === "week") {
+        renderWeekCalendar(grouped, today);
+      } else if (calendarMode === "month") {
+        renderMonthCalendar(grouped, today);
+      } else if (calendarMode === "quarter") {
+        renderQuarterCalendar(rows);
+      } else if (calendarMode === "year") {
+        renderYearCalendar(rows);
+      }
+    }
+
+    function renderWeekCalendar(grouped, today) {
+      const start = startOfWeek(calendarCursor);
+      const end = endOfWeek(calendarCursor);
+
+      el("calendarTitle").textContent =
+        `Semaine du ${formatDateFr(start, { day: "2-digit", month: "long", year: "numeric" })} au ${formatDateFr(end, { day: "2-digit", month: "long", year: "numeric" })}`;
+
+      const dayNames = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+      let html = `<div class="calendar-grid week">`;
+
+      dayNames.forEach(name => {
+        html += `<div class="day-name">${name}</div>`;
+      });
+
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(start);
+        date.setDate(start.getDate() + i);
+
+        const key = toISODate(date);
+        const items = grouped[key] || [];
+        const isToday = isSameDay(date, today);
+
+        html += `
+          <div class="calendar-cell ${isToday ? "today" : ""}">
+            <div class="calendar-date">${formatDateFr(date, { day: "2-digit", month: "2-digit" })}</div>
+            <div class="calendar-events">
+              ${
+                items.length
+                  ? items.map(item => eventHtml(item, false)).join("")
+                  : `<div class="muted">Aucune campagne</div>`
+              }
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+      el("calendarContent").innerHTML = html;
+    }
+
+    function renderMonthCalendar(grouped, today) {
+      const monthStart = startOfMonth(calendarCursor);
+
+      el("calendarTitle").textContent =
+        formatDateFr(calendarCursor, { month: "long", year: "numeric" });
+
+      const gridStart = startOfWeek(monthStart);
+      const dayNames = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+      let html = `<div class="calendar-grid month">`;
+
+      dayNames.forEach(name => {
+        html += `<div class="day-name">${name}</div>`;
+      });
+
+      for (let i = 0; i < 42; i++) {
+        const date = new Date(gridStart);
+        date.setDate(gridStart.getDate() + i);
+
+        const key = toISODate(date);
+        const items = grouped[key] || [];
+        const isToday = isSameDay(date, today);
+        const isOutside = date.getMonth() !== calendarCursor.getMonth();
+
+        html += `
+          <div class="calendar-cell ${isToday ? "today" : ""} ${isOutside ? "outside" : ""}">
+            <div class="calendar-date">${date.getDate()}</div>
+            <div class="calendar-events">
+              ${
+                items.length
+                  ? items.map(item => eventHtml(item, true)).join("")
+                  : ""
+              }
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+      el("calendarContent").innerHTML = html;
+    }
+
+    function rowOverlapsMonth(row, year, month) {
+      const monthStart = new Date(year, month, 1, 12);
+      const monthEnd = new Date(year, month + 1, 0, 12);
+      return row._startDateObj <= monthEnd && row._endDateObj >= monthStart;
+    }
+
+    function renderQuarterCalendar(rows) {
+      const quarterStart = startOfQuarter(calendarCursor);
+      const quarterNumber = Math.floor(quarterStart.getMonth() / 3) + 1;
+      const year = quarterStart.getFullYear();
+
+      el("calendarTitle").textContent = `T${quarterNumber} ${year}`;
+
+      const months = [0, 1, 2].map(offset => {
+        const d = new Date(quarterStart.getFullYear(), quarterStart.getMonth() + offset, 1, 12);
+        const monthRows = rows.filter(row => rowOverlapsMonth(row, d.getFullYear(), d.getMonth()));
+        return { date: d, rows: monthRows };
+      });
+
+      let html = `<div class="calendar-grid quarter">`;
+
+      months.forEach(({ date, rows: monthRows }) => {
+        html += `
+          <div class="month-card">
+            <h4>${formatDateFr(date, { month: "long", year: "numeric" })}</h4>
+            <div class="month-meta">${monthRows.length} campagne${monthRows.length > 1 ? "s" : ""}</div>
+            <div class="month-list">
+              ${
+                monthRows.length
+                  ? monthRows.map(item => `
+                      <div class="month-item ${escapeHtml(normalizeStatus(item.status))}" onclick="openEvent(${item.id})">
+                        <strong>${escapeHtml(itemDateRangeLabel(item))}</strong> — ${escapeHtml(item.campaign || "(Sans campagne)")}
+                      </div>
+                    `).join("")
+                  : `<div class="muted">Aucune campagne ce mois-ci</div>`
+              }
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      el("calendarContent").innerHTML = html;
+    }
+
+    function renderYearCalendar(rows) {
+      const year = calendarCursor.getFullYear();
+      el("calendarTitle").textContent = `Année ${year}`;
+
+      let html = `<div class="calendar-grid year">`;
+
+      for (let month = 0; month < 12; month++) {
+        const d = new Date(year, month, 1, 12);
+        const monthRows = rows.filter(row => rowOverlapsMonth(row, year, month));
+
+        html += `
+          <div class="month-card">
+            <h4>${formatDateFr(d, { month: "long", year: "numeric" })}</h4>
+            <div class="month-meta">${monthRows.length} campagne${monthRows.length > 1 ? "s" : ""}</div>
+            <div class="month-list">
+              ${
+                monthRows.length
+                  ? monthRows.slice(0, 8).map(item => `
+                      <div class="month-item ${escapeHtml(normalizeStatus(item.status))}" onclick="openEvent(${item.id})">
+                        <strong>${escapeHtml(itemDateRangeLabel(item))}</strong> — ${escapeHtml(item.campaign || "(Sans campagne)")}
+                      </div>
+                    `).join("") +
+                    (monthRows.length > 8
+                      ? `<div class="muted">+ ${monthRows.length - 8} autre(s) campagne(s)</div>`
+                      : "")
+                  : `<div class="muted">Aucune campagne</div>`
+              }
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+      el("calendarContent").innerHTML = html;
+    }
+
+    function render() {
+      let rows = applyFilters(data);
+      rows = applySorting(rows);
+
+      el("summary").textContent =
+        rows.length + (rows.length > 1 ? " lignes affichées" : " ligne affichée") +
+        " / " +
+        data.length + (data.length > 1 ? " lignes au total" : " ligne au total");
+
+      if (rows.length === 0) {
+        el("tbody").innerHTML = `
+          <tr>
+            <td colspan="12">
+              <div class="empty-state">Aucun résultat avec les filtres actuels.</div>
+            </td>
+          </tr>
+        `;
+        updateFilterButtonStates();
+        renderCalendar();
+        return;
+      }
+
+      el("tbody").innerHTML = rows.map(a => {
+       if (editId === a.id) {
+  return `
+    <tr class="edit">
+      <td><textarea class="table-textarea" oninput="update('campaign', this.value)">${escapeHtml(buffer.campaign || "")}</textarea></td>
+      <td><textarea class="table-textarea" oninput="update('target', this.value)">${escapeHtml(buffer.target || "")}</textarea></td>
+      <td><input type="date" value="${escapeHtml(buffer.dateStart || "")}" oninput="update('dateStart', this.value)"></td>
+      <td><input type="date" value="${escapeHtml(buffer.dateEnd || "")}" oninput="update('dateEnd', this.value)"></td>
+      <td>
+        <select onchange="update('type', this.value)">
+          <option value="Générique / Produit" ${(buffer.type || "") === "Générique / Produit" ? "selected" : ""}>Générique / Produit</option>
+          <option value="Nouveautés" ${(buffer.type || "") === "Nouveautés" ? "selected" : ""}>Nouveautés</option>
+          <option value="Sectorielle" ${(buffer.type || "") === "Sectorielle" ? "selected" : ""}>Sectorielle</option>
+          <option value="Concurrence" ${(buffer.type || "") === "Concurrence" ? "selected" : ""}>Concurrence</option>
+          <option value="Persona" ${(buffer.type || "") === "Persona" ? "selected" : ""}>Persona</option>
+          <option value="ABM" ${(buffer.type || "") === "ABM" ? "selected" : ""}>ABM</option>
+          <option value="Récurrente" ${(buffer.type || "") === "Récurrente" ? "selected" : ""}>Récurrente</option>
+          <option value="Saisonnière" ${(buffer.type || "") === "Saisonnière" ? "selected" : ""}>Saisonnière</option>
+        </select>
+      </td>
+      <td><textarea class="table-textarea" oninput="update('message', this.value)">${escapeHtml(buffer.message || "")}</textarea></td>
+      <td><input type="number" min="0" step="1" value="${escapeHtml(buffer.contacts || "")}" oninput="update('contacts', this.value)"></td>
+      <td><textarea class="table-textarea" oninput="update('objectif', this.value)">${escapeHtml(buffer.objectif || "")}</textarea></td>
+      <td><textarea class="table-textarea" oninput="update('owners', this.value)">${escapeHtml(buffer.owners || "")}</textarea></td>
+      <td><textarea class="table-textarea" placeholder="https://..." oninput="update('campaignLink', this.value)">${escapeHtml(buffer.campaignLink || "")}</textarea></td>
+      <td>
+        <select onchange="update('status', this.value)">
+          <option value="pending" ${(normalizeStatus(buffer.status || "") === "pending") ? "selected" : ""}>À faire</option>
+          <option value="done" ${(normalizeStatus(buffer.status || "") === "done") ? "selected" : ""}>Fait</option>
+          <option value="late" ${(normalizeStatus(buffer.status || "") === "late") ? "selected" : ""}>En retard</option>
+        </select>
+      </td>
+      <td class="actions">
+        <button class="success" onclick="saveEdit(${a.id})">✔</button>
+        <button class="secondary" onclick="cancel()">✖</button>
+      </td>
+    </tr>
+  `;
+}
+
+        const normalizedStatus = normalizeStatus(a.status);
+
+ return `
+  <tr>
+    <td class="wrap-cell">${escapeHtml(a.campaign)}</td>
+    <td class="wrap-cell">${escapeHtml(a.target)}</td>
+    <td class="small-cell col-date-start">${escapeHtml(a.dateStart)}</td>
+    <td class="small-cell col-date-end">${escapeHtml(a.dateEnd)}</td>
+    <td class="wrap-cell">${escapeHtml(a.type)}</td>
+    <td class="message-cell wrap-cell">${escapeHtml(a.message)}</td>
+    <td class="small-cell col-contacts">${escapeHtml(a.contacts)}</td>
+    <td class="wrap-cell">${escapeHtml(a.objectif)}</td>
+    <td class="wrap-cell">${escapeHtml(a.owners)}</td>
+    <td class="small-cell col-link">
+      ${
+        a.campaignLink
+          ? `<button class="ghost" onclick="openCampaignLink('${escapeHtml(a.campaignLink)}')">🔗 Ouvrir</button>`
+          : `<span class="muted">Aucun lien</span>`
+      }
+    </td>
+    <td class="col-status status ${escapeHtml(normalizedStatus)}">${escapeHtml(statusLabel(normalizedStatus))}</td>
+    <td class="actions">
+      <button onclick="edit(${a.id})">✏️</button>
+      <button class="danger" onclick="del(${a.id})">🗑</button>
+    </td>
+  </tr>
+`;
+      }).join("");
+
+      updateFilterButtonStates();
+      renderCalendar();
+    }
+
+    save();
+    render();
+  </script>
+</body>
+</html>
